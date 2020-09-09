@@ -5,13 +5,14 @@ import java.util.List;
 
 import leilao.dominio.Leilao;
 import leilao.dao.LeilaoDao;
+import leilao.repositorio.RepositorioDeLeiloes;
 
 public class EncerradorDeLeilao {
 
 	private int total = 0;
-	private final LeilaoDao dao;
+	private final RepositorioDeLeiloes dao;
 
-	public EncerradorDeLeilao(LeilaoDao dao) {
+	public EncerradorDeLeilao(RepositorioDeLeiloes dao) {
 		this.dao = dao;
 	}
 
