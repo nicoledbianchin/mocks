@@ -11,6 +11,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -38,5 +39,28 @@ public class EncerradorDeLeilaoTest {
         assertThat(encerrador.getTotalEncerrados(), equalTo(2));
         assertTrue(leilao1.isEncerrado());
         assertTrue(leilao2.isEncerrado());
+    }
+
+    @Test
+    public void naoDeveEncerrarLeiloesQueComecaramMenosDeUmaSemanaAtras() {
+        Calendar ontem = Calendar.getInstance();
+        ontem.add(Calendar.DAY_OF_MONTH, -1);
+
+        Leilao leilao1 = new CriadorDeLeilao().para("Playstation 3").naData(ontem).constroi();
+        Leilao leilao2 = new CriadorDeLeilao().para("Xbox").naData(ontem).constroi();
+        List<Leilao> leiloesAtuais = new ArrayList<>();
+        leiloesAtuais.add(leilao1);
+        leiloesAtuais.add(leilao2);
+
+        LeilaoDao daoFalso = mock(LeilaoDao.class);
+
+        when(daoFalso.correntes()).thenReturn(leiloesAtuais);
+
+        EncerradorDeLeilao encerrador = new EncerradorDeLeilao(daoFalso);
+        encerrador.encerra();
+
+        assertThat(encerrador.getTotalEncerrados(), equalTo(0));
+        assertFalse(leilao1.isEncerrado());
+        assertFalse(leilao2.isEncerrado());
     }
 }
