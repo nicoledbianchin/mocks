@@ -13,6 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -30,7 +31,6 @@ public class EncerradorDeLeilaoTest {
         leiloesAntigos.add(leilao2);
 
         LeilaoDao daoFalso = mock(LeilaoDao.class);
-
         when(daoFalso.correntes()).thenReturn(leiloesAntigos);
 
         EncerradorDeLeilao encerrador = new EncerradorDeLeilao(daoFalso);
@@ -53,7 +53,6 @@ public class EncerradorDeLeilaoTest {
         leiloesAtuais.add(leilao2);
 
         LeilaoDao daoFalso = mock(LeilaoDao.class);
-
         when(daoFalso.correntes()).thenReturn(leiloesAtuais);
 
         EncerradorDeLeilao encerrador = new EncerradorDeLeilao(daoFalso);
@@ -62,5 +61,16 @@ public class EncerradorDeLeilaoTest {
         assertThat(encerrador.getTotalEncerrados(), equalTo(0));
         assertFalse(leilao1.isEncerrado());
         assertFalse(leilao2.isEncerrado());
+    }
+
+    @Test
+    public void naoDeveEncerrarLeiloesCasoNaoHajaNenhum() {
+        LeilaoDao daoFalso = mock(LeilaoDao.class);
+        when(daoFalso.correntes()).thenReturn(new ArrayList<>());
+
+        EncerradorDeLeilao encerrador = new EncerradorDeLeilao(daoFalso);
+        encerrador.encerra();
+
+        assertThat(encerrador.getTotalEncerrados(), equalTo(0));
     }
 }
