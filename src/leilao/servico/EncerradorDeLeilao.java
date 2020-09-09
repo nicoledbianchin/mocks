@@ -3,16 +3,19 @@ package leilao.servico;
 import java.util.Calendar;
 import java.util.List;
 
-import leilao.dao.LeilaoDaoFalso;
 import leilao.dominio.Leilao;
 import leilao.dao.LeilaoDao;
 
 public class EncerradorDeLeilao {
 
 	private int total = 0;
+	private final LeilaoDao dao;
+
+	public EncerradorDeLeilao(LeilaoDao dao) {
+		this.dao = dao;
+	}
 
 	public void encerra() {
-		LeilaoDaoFalso dao = new LeilaoDaoFalso();
 		List<Leilao> todosLeiloesCorrentes = dao.correntes();
 
 		for (Leilao leilao : todosLeiloesCorrentes) {
