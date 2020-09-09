@@ -3,6 +3,7 @@ package leilao.servico;
 import builder.CriadorDeLeilao;
 import leilao.dao.LeilaoDao;
 import leilao.dominio.Leilao;
+import leilao.repositorio.RepositorioDeLeiloes;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -10,12 +11,9 @@ import java.util.Calendar;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 public class EncerradorDeLeilaoTest {
 
@@ -30,7 +28,7 @@ public class EncerradorDeLeilaoTest {
         leiloesAntigos.add(leilao1);
         leiloesAntigos.add(leilao2);
 
-        LeilaoDao daoFalso = mock(LeilaoDao.class);
+        RepositorioDeLeiloes daoFalso = mock(RepositorioDeLeiloes.class);
         when(daoFalso.correntes()).thenReturn(leiloesAntigos);
 
         EncerradorDeLeilao encerrador = new EncerradorDeLeilao(daoFalso);
@@ -52,7 +50,7 @@ public class EncerradorDeLeilaoTest {
         leiloesAtuais.add(leilao1);
         leiloesAtuais.add(leilao2);
 
-        LeilaoDao daoFalso = mock(LeilaoDao.class);
+        RepositorioDeLeiloes daoFalso = mock(RepositorioDeLeiloes.class);
         when(daoFalso.correntes()).thenReturn(leiloesAtuais);
 
         EncerradorDeLeilao encerrador = new EncerradorDeLeilao(daoFalso);
@@ -65,7 +63,7 @@ public class EncerradorDeLeilaoTest {
 
     @Test
     public void naoDeveEncerrarLeiloesCasoNaoHajaNenhum() {
-        LeilaoDao daoFalso = mock(LeilaoDao.class);
+        RepositorioDeLeiloes daoFalso = mock(RepositorioDeLeiloes.class);
         when(daoFalso.correntes()).thenReturn(new ArrayList<>());
 
         EncerradorDeLeilao encerrador = new EncerradorDeLeilao(daoFalso);
