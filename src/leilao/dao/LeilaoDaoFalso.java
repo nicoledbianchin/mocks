@@ -1,9 +1,9 @@
-package br.com.caelum.leilao.infra.dao;
+package leilao.dao;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.caelum.leilao.dominio.Leilao;
+import leilao.dominio.Leilao;
 
 public class LeilaoDaoFalso {
 

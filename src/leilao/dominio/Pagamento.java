@@ -1,4 +1,4 @@
-package br.com.caelum.leilao.dominio;
+package leilao.dominio;
 
 import java.util.Calendar;
 
