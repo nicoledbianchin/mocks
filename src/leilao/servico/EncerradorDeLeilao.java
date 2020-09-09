@@ -3,6 +3,7 @@ package leilao.servico;
 import java.util.Calendar;
 import java.util.List;
 
+import leilao.dao.LeilaoDaoFalso;
 import leilao.dominio.Leilao;
 import leilao.dao.LeilaoDao;
 
@@ -11,7 +12,7 @@ public class EncerradorDeLeilao {
 	private int total = 0;
 
 	public void encerra() {
-		LeilaoDao dao = new LeilaoDao();
+		LeilaoDaoFalso dao = new LeilaoDaoFalso();
 		List<Leilao> todosLeiloesCorrentes = dao.correntes();
 
 		for (Leilao leilao : todosLeiloesCorrentes) {
